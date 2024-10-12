@@ -8,7 +8,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('chain.store'), {
+    form.post(route('chains.store'), {
         onSuccess: () => {
             form.reset();
         },

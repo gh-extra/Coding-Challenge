@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('input');
             $table->text('output')->nullable();
             $table->timestamp('last_run_at')->nullable();
+            // TODO: remove position
             $table->integer('position')->default(0);
 
             $table->softDeletes();

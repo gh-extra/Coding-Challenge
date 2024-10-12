@@ -14,7 +14,7 @@ class ChainController extends Controller
      */
     public function index(Request $request)
     {
-        return Inertia::render('Chain/List', [
+        return Inertia::render('Chain/Index', [
             'chains' => Chain::where('user_id', $request->user()->id)->get(),
         ]);
     }
@@ -40,7 +40,7 @@ class ChainController extends Controller
             'user_id' => $request->user()->id,
         ]);
 
-        return redirect()->route('chain.index')->with('success', 'Chain created successfully');
+        return redirect()->route('chains.index')->with('success', 'Chain created successfully');
     }
 
     /**
@@ -51,7 +51,7 @@ class ChainController extends Controller
         // TODO: validate this chain belongs to the user
         return Inertia::render('Chain/Show', [
             'chain' => $chain->load([
-                'prompts' => fn ($query) => $query->orderBy('position'),
+                'prompts' => fn ($query) => $query->orderBy('id'),
             ])
         ]);
     }
@@ -72,6 +72,6 @@ class ChainController extends Controller
         // TODO: validate this chain belongs to the user
         $chain->delete();
 
-        return Redirect::route('chain.index');
+        return Redirect::route('chains.index');
     }
 }

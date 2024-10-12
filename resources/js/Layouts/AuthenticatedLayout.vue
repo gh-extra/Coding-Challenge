@@ -36,7 +36,7 @@ const showingNavigationDropdown = ref(false);
                             </div>
 
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :active="route().current('chain.index')" :href="route('chain.index')">
+                                <NavLink :active="route().current('chains.index')" :href="route('chains.index')">
                                     Prompt Chains
                                 </NavLink>
                             </div>

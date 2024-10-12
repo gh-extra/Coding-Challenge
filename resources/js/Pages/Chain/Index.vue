@@ -12,14 +12,13 @@ defineProps({
 const deleteForm = useForm({});
 const deleteChain = (id) => {
     if (confirm("Are you sure you want to delete this prompt chain?")) {
-        deleteForm.delete(route('chain.destroy', { id }));
+        deleteForm.delete(route('chains.destroy', { id }));
     }
 };
 
 const redirectToCreate = () => {
-    router.visit(route('chain.create'));
+    router.visit(route('chains.create'));
 };
-
 </script>
 
 <template>
@@ -38,18 +37,19 @@ const redirectToCreate = () => {
                 </button>
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <div class="mb-4" v-for="chain in chains" :key="chain.id">
-                        <NavLink :active="route().current('chain.show')" :href="route('chain.show', { id: chain.id })">
+                    <div class="mb-4 relative" v-for="chain in chains" :key="chain.id">
+                        <button
+                            @click.prevent="deleteChain(chain.id)"
+                            class="absolute top-0 left-0 inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500">
+                            X
+                        </button>
+
+                        <NavLink :active="route().current('chains.show')" :href="route('chains.show', { id: chain.id })">
                             <div class="p-4 sm:p-8 bg-gray-50 border border-gray-200 rounded-lg shadow-md">
                                 <h3 class="text-lg font-semibold">{{ chain.name }}</h3>
                                 <p class="text-gray-600">{{ chain.description }}</p>
                             </div>
                         </NavLink>
-                        <button
-                            @click.prevent="deleteChain(chain.id)"
-                            class="ml-2 inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500">
-                            X
-                        </button>
                     </div>
                 </div>
             </div>
