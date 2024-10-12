@@ -12,7 +12,6 @@ const props = defineProps({
 const deleteForm = useForm({});
 
 const deletePrompt = (id) => {
-    // TODO: what if there is not ID?
     if (confirm("Are you sure you want to delete this prompt?")) {
         deleteForm.delete(route('chains.prompts.destroy', { chain: props.prompt.chain_id, prompt: id }));
     }
@@ -23,10 +22,26 @@ const form = useForm({
 });
 
 const submit = () => {
-    if (props.prompt.id) {
-        form.patch(route('chains.prompts.update', { id: props.prompt.id }));
-    } else {
-        form.post(route('chains.prompts.store'));
+    form.patch(route('chains.prompts.update', { chain: props.prompt.chain_id, prompt: props.prompt.id }), {
+        onSuccess: () => {
+            alert('Saved!');
+        },
+        onError: () => {
+            alert('Error updating the prompt');
+        }
+    });
+};
+
+const runPrompt = () => {
+    if (form.input) {
+        form.post(route('chains.prompts.run', { chain: props.prompt.chain_id, prompt: props.prompt.id }), {
+            // onSuccess: (page) => {
+
+            // },
+            onError: () => {
+                alert('Error running the prompt');
+            }
+        });
     }
 };
 
@@ -49,18 +64,27 @@ const submit = () => {
                     rows="3"
                     placeholder="Prompt away!"
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 focus:border-blue-500"
-                    v-model="form.input">{{ props.prompt.input }}</textarea>
+                    v-model="form.input"
+                    required>{{ props.prompt.input }}</textarea>
             </div>
 
-            <div aria-hidden="true">
-                <div class="flex items-center">
-
-                    <div class="ml-2">
-                        <button type="submit"
-                                class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-500">
-                            Run
-                        </button>
-                    </div>
+            <div aria-hidden="true" class="flex items-center">
+                <div class="ml-2">
+                    <button type="button"
+                            @click.prevent="runPrompt"
+                            :disabled="!form.input"
+                            :class="{'bg-gray-400 cursor-not-allowed': !form.input, 'bg-green-600 hover:bg-green-700': form.input}"
+                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring focus:ring-green-500">
+                        Run
+                    </button>
+                </div>
+                <div class="ml-2">
+                    <button type="submit"
+                            :disabled="!form.input"
+                            :class="{'bg-gray-400 cursor-not-allowed': !form.input, 'bg-blue-600 hover:bg-blue-700': form.input}"
+                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring focus:ring-blue-500">
+                        Save
+                    </button>
                 </div>
             </div>
 

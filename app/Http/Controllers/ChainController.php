@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chain;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -70,7 +71,11 @@ class ChainController extends Controller
     public function destroy(Chain $chain)
     {
         // TODO: validate this chain belongs to the user
-        $chain->delete();
+        DB::transaction(function () use ($chain) {
+            $chain->prompts()->delete();
+
+            $chain->delete();
+        });
 
         return Redirect::route('chains.index');
     }
