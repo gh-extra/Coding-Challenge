@@ -41,7 +41,7 @@ const runChain = (chain) => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ chain.name }}</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ chain.name }} ({{ chain.chat_engine_id }})</h2>
         </template>
 
         <div class="py-12">

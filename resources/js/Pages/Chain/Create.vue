@@ -2,9 +2,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
+const CHAT_ENGINE_GPT_3_5_TURBO = 'gpt-3.5-turbo';
+const CHAT_ENGINE_GPT_4_MINI = 'gpt-4-mini';
+
 const form = useForm({
     name: '',
     description: '',
+    chat_engine_id: CHAT_ENGINE_GPT_3_5_TURBO,
 });
 
 const submit = () => {
@@ -47,6 +51,19 @@ const submit = () => {
                                 id="description"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             />
+                        </div>
+
+                        <div>
+                            <label for="chat_engine_id" class="block text-sm font-medium text-gray-700">Select Chat Engine</label>
+                            <select
+                                v-model="form.chat_engine_id"
+                                id="chat_engine_id"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                required
+                            >
+                                <option :value="CHAT_ENGINE_GPT_3_5_TURBO">ChatGPT 3.5 Turbo</option>
+                                <option :value="CHAT_ENGINE_GPT_4_MINI">ChatGPT 4 Mini</option>
+                            </select>
                         </div>
 
                         <div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chain;
+use App\Services\ChatEngines\ChatEngine;
+use App\Services\PromptService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -10,6 +12,10 @@ use Inertia\Inertia;
 
 class ChainController extends Controller
 {
+    public function __construct(private PromptService $prompt_service)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -33,15 +39,17 @@ class ChainController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
+            'chat_engine_id' => 'required|string|max:255|in:' . implode(',', ChatEngine::CHAT_ENGINES),
         ]);
 
-        Chain::create([
+        $chain = Chain::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
+            'chat_engine_id' => $request->input('chat_engine_id'),
             'user_id' => $request->user()->id,
         ]);
 
-        return redirect()->route('chains.index')->with('success', 'Chain created successfully');
+        return redirect()->route('chains.show', $chain->id)->with('success', 'Chain created successfully');
     }
 
     /**
@@ -84,14 +92,7 @@ class ChainController extends Controller
     {
         // TODO: validate this chain belongs to the user
 
-        DB::transaction(function () use ($chain) {
-            $chain->prompts->each(function ($prompt) {
-                $prompt->update([
-                    'output' => $prompt->input . ' output',
-                    'last_run_at' => now()
-                ]);
-            });
-        });
+        $this->prompt_service->runChain($chain);
 
         return Inertia::location(route('chains.show', $chain->id));
     }

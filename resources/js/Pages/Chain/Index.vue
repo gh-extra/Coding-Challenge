@@ -46,7 +46,7 @@ const redirectToCreate = () => {
 
                         <NavLink :active="route().current('chains.show')" :href="route('chains.show', { id: chain.id })">
                             <div class="p-4 sm:p-8 bg-gray-50 border border-gray-200 rounded-lg shadow-md">
-                                <h3 class="text-lg font-semibold">{{ chain.name }}</h3>
+                                <h3 class="text-lg font-semibold">{{ chain.name }} ({{ chain.chat_engine_id }})</h3>
                                 <p class="text-gray-600">{{ chain.description }}</p>
                             </div>
                         </NavLink>

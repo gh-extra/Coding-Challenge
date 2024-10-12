@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Chain;
 use App\Models\Prompt;
+use App\Services\PromptService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class PromptController extends Controller
 {
+    public function __construct(private PromptService $prompt_service)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -70,6 +75,7 @@ class PromptController extends Controller
 
     public function run(Request $request, Chain $chain, Prompt $prompt)
     {
+        // 1st we update the Prompt with the latest input typed by the user
         $request->validate([
             'input' => 'required|string',
         ]);
@@ -77,10 +83,7 @@ class PromptController extends Controller
         // TODO: validate this prompt belongs to the user
         $prompt->update(['input' => $request->input('input')]);
 
-        // TODO: run prompt
-        $output = $prompt->input . ' - Excepturi qui voluptate minima laudantium. Cupiditate qui saepe vel facere quisquam consequatur nam. Nemo quis voluptatum rerum occaecati vel et veniam enim.';
-
-        $prompt->update(['output' => $output]);
+        $this->prompt_service->runSinglePrompt($prompt);
 
         return Inertia::location(route('chains.show', $chain->id));
     }

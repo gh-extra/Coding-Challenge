@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Services\ChatEngines\ChatEngine;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class ChainFactory extends Factory
         return [
             'name' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
+            'chat_engine_id' => $this->faker->randomElement(ChatEngine::CHAT_ENGINES),
             'user_id' => User::factory(),
         ];
     }

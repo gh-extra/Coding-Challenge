@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('description')->nullable();
+            $table->string('chat_engine_id');
 
             $table->foreignId('user_id')->index();
             $table->timestamp('last_run_at')->nullable();

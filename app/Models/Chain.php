@@ -13,6 +13,7 @@ class Chain extends Model
     protected $fillable = [
         'name',
         'description',
+        'chat_engine_id',
         'user_id',
         'last_run_at',
     ];
@@ -20,6 +21,7 @@ class Chain extends Model
     protected $visible = [
         'id',
         'name',
+        'chat_engine_id',
         'description',
         'user_id',
         'last_run_at',
