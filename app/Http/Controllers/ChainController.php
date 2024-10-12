@@ -57,7 +57,6 @@ class ChainController extends Controller
      */
     public function show(Chain $chain)
     {
-        // TODO: validate this chain belongs to the user
         return Inertia::render('Chain/Show', [
             'chain' => $chain->load([
                 'prompts' => fn ($query) => $query->orderBy('id'),
@@ -70,7 +69,6 @@ class ChainController extends Controller
      */
     public function destroy(Chain $chain)
     {
-        // TODO: validate this chain belongs to the user
         DB::transaction(function () use ($chain) {
             $chain->prompts()->delete();
 
@@ -82,8 +80,6 @@ class ChainController extends Controller
 
     public function run(Request $request, Chain $chain)
     {
-        // TODO: validate this chain belongs to the user
-
         $this->prompt_service->runChain($chain);
 
         return Inertia::location(route('chains.show', $chain->id));

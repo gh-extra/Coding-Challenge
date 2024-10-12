@@ -16,14 +16,6 @@ class PromptController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-    }
-
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, Chain $chain)
@@ -41,13 +33,6 @@ class PromptController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Prompt $prompt)
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Chain $chain, Prompt $prompt)
@@ -56,7 +41,6 @@ class PromptController extends Controller
             'input' => 'required|string',
         ]);
 
-        // TODO: validate this prompt belongs to the user
         $prompt->update(['input' => $request->input('input')]);
 
         return Redirect::route('chains.show', ['chain' => $prompt->chain_id]);
@@ -67,7 +51,6 @@ class PromptController extends Controller
      */
     public function destroy(Chain $chain, Prompt $prompt)
     {
-        // TODO: validate this prompt belongs to the user
         $prompt->delete();
 
         return Redirect::route('chains.show', ['chain' => $prompt->chain_id]);
@@ -80,7 +63,6 @@ class PromptController extends Controller
             'input' => 'required|string',
         ]);
 
-        // TODO: validate this prompt belongs to the user
         $prompt->update(['input' => $request->input('input')]);
 
         $this->prompt_service->runSinglePrompt($prompt);

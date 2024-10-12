@@ -27,8 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('chains', ChainController::class)
-        ->except(['update'])
-        ->middleware(CheckChainOwner::class);
+        ->except(['update']);
 
     Route::post('/chains/{chain}/run', [ChainController::class, 'run'])->name('chains.run');
 
