@@ -37,5 +37,9 @@ export default defineConfig({
             methods: ['GET', 'POST', 'OPTIONS'], // Allowed methods
             allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
         },
+        hmr: {
+            host: 'localhost',
+            port: 5173,
+        },
     },
 });
