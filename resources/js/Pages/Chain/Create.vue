@@ -17,11 +17,11 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Create New Chain" />
+    <Head title="New Prompt Chain" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create New Chain</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create New Prompt Chain</h2>
         </template>
 
         <div class="py-12">
