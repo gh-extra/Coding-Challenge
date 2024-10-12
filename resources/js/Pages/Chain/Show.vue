@@ -58,6 +58,10 @@ const runChain = (chain) => {
                         </button>
                     </div>
 
+                    <p v-if="!chain.prompts.length" class="mt-4 text-gray-500">
+                        Please add prompts to this chain.
+                    </p>
+
                     <div class="mt-4" v-for="prompt in chain.prompts" :key="prompt.id">
                         <Prompt :prompt="prompt" />
                     </div>

@@ -82,8 +82,8 @@ const runPrompt = () => {
                 </div>
                 <div class="ml-2">
                     <button type="submit"
-                            :disabled="!form.input"
-                            :class="{'bg-gray-400 cursor-not-allowed': !form.input, 'bg-blue-600 hover:bg-blue-700': form.input}"
+                            :disabled="!form.input || form.input === props.prompt.input"
+                            :class="{'bg-gray-400 cursor-not-allowed': !form.input|| form.input === props.prompt.input, 'bg-blue-600 hover:bg-blue-700': form.input && form.input !== props.prompt.input}"
                             class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring focus:ring-blue-500">
                         Save
                     </button>

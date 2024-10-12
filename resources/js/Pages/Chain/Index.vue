@@ -37,6 +37,10 @@ const redirectToCreate = () => {
                 </button>
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    <p v-if="!chains.length" class="text-gray-500">
+                        Please add new prompt chains.
+                    </p>
+
                     <div class="mb-4 relative" v-for="chain in chains" :key="chain.id">
                         <button
                             @click.prevent="deleteChain(chain.id)"
