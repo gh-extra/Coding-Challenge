@@ -41,19 +41,21 @@ const redirectToCreate = () => {
                         Please add new prompt chains.
                     </p>
 
-                    <div class="mb-4 relative" v-for="chain in chains" :key="chain.id">
-                        <button
-                            @click.prevent="deleteChain(chain.id)"
-                            class="absolute top-0 left-0 inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-300 text-red-600 hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500">
-                            X
-                        </button>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <div class="relative" v-for="chain in chains" :key="chain.id">
+                            <button
+                                @click.prevent="deleteChain(chain.id)"
+                                class="absolute top-0 left-0 inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-300 text-red-600 hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500">
+                                X
+                            </button>
 
-                        <NavLink :active="route().current('chains.show')" :href="route('chains.show', { id: chain.id })">
-                            <div class="p-4 sm:p-8 bg-gray-50 border border-gray-200 rounded-lg shadow-md">
-                                <h3 class="text-lg font-semibold">{{ chain.name }} ({{ chain.chat_engine_id }})</h3>
-                                <p class="text-gray-600">{{ chain.description }}</p>
-                            </div>
-                        </NavLink>
+                            <NavLink :active="route().current('chains.show')" :href="route('chains.show', { id: chain.id })">
+                                <div class="p-4 sm:p-8 bg-gray-50 border border-gray-200 rounded-lg shadow-md">
+                                    <h3 class="text-lg font-semibold">{{ chain.name }} ({{ chain.chat_engine_id }})</h3>
+                                    <p class="text-gray-600">{{ chain.description }}</p>
+                                </div>
+                            </NavLink>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -40,6 +40,7 @@ const submit = () => {
                                 id="name"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 required
+                                maxlength="45"
                             />
                         </div>
 
@@ -50,6 +51,7 @@ const submit = () => {
                                 type="text"
                                 id="description"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                maxlength="255"
                             />
                         </div>
 
