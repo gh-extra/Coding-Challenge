@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChainController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromptController;
+use App\Http\Middleware\CheckChainOwner;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,11 +26,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('chains', ChainController::class);
+    Route::resource('chains', ChainController::class)
+        ->except(['update'])
+        ->middleware(CheckChainOwner::class);
+
     Route::post('/chains/{chain}/run', [ChainController::class, 'run'])->name('chains.run');
 
     Route::resource('chains.prompts', PromptController::class)
          ->only(['store', 'update', 'destroy']);
+
     Route::post('/chains/{chain}/prompts/{prompt}/run', [PromptController::class, 'run'])->name('chains.prompts.run');
 });
 
