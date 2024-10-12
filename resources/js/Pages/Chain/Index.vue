@@ -40,7 +40,7 @@ const redirectToCreate = () => {
                     <div class="mb-4 relative" v-for="chain in chains" :key="chain.id">
                         <button
                             @click.prevent="deleteChain(chain.id)"
-                            class="absolute top-0 left-0 inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500">
+                            class="absolute top-0 left-0 inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-300 text-red-600 hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500">
                             X
                         </button>
 

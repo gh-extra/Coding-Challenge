@@ -26,7 +26,14 @@ const redirectToCreate = (chainId) => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <h3 class="text-lg font-semibold">{{ chain.name }}</h3>
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold">{{ chain.name }}</h3>
+                        <button
+                            @click.prevent="redirectToCreate(chain.id)"
+                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-500">
+                            Run Full Chain
+                        </button>
+                    </div>
 
                     <div class="mt-4" v-for="prompt in chain.prompts" :key="prompt.id">
                         <Prompt :prompt="prompt" />
