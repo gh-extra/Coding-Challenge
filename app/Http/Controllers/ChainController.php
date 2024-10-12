@@ -19,12 +19,28 @@ class ChainController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return Inertia::render('Chain/Create');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+        ]);
+
+        Chain::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'user_id' => $request->user()->id,
+        ]);
+
+        return redirect()->route('chain.index')->with('success', 'Chain created successfully');
     }
 
     /**

@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/chain', [ChainController::class, 'index'])->name('chain.index');
+    Route::get('/chains/create', [ChainController::class, 'create'])->name('chain.create');
     Route::post('/chain', [ChainController::class, 'store'])->name('chain.store');
     Route::get('/chain/{chain}', [ChainController::class, 'show'])->name('chain.show');
     Route::delete('/chain/{chain}', [ChainController::class, 'destroy'])->name('chain.destroy');
