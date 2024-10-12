@@ -1,29 +1,63 @@
 services:
-  app:
+  # Builders
+  app-node-builder:
+    image: node:22-alpine
+    container_name: app-node-builder
+    restart: no
+    volumes:
+      - .:/var/www/app
+    working_dir: /var/www/app
+    command: ["/bin/ash", "-c", "npm install"]
+
+  app-laravel-builder:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./docker-setup/laravel
+    container_name: app-laravel-builder
+    restart: no
+    volumes:
+      - .:/var/www/app
+    working_dir: /var/www/app
+    depends_on:
+      app-node-builder:
+        condition: service_completed_successfully
+    networks:
+      - app_network
+    command: ["/usr/local/bin/setup.sh"]
+
+  #Runners
+  app-laravel:
+    build:
+      context: ./docker-setup/laravel
+    container_name: app-laravel
+    restart: unless-stopped
+    depends_on:
+      app-laravel-builder:
+        condition: service_completed_successfully
+    volumes:
+      - .:/var/www/app
+    working_dir: /var/www/app
+    networks:
+      - app_network
     ports:
       - "8000:8000"
-    volumes:
-      - .:/var/www
-    environment:
-      - DB_CONNECTION=sqlite
-      - DB_DATABASE=/var/www/database/database.sqlite
-    networks:
-      - app-network
+    command: ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
 
-  vite:
-    image: node:22
-    working_dir: /var/www/resources/js
+  app-node:
+    image: node:22-alpine
+    container_name: app-node
+    restart: unless-stopped
+    depends_on:
+      app-node-builder:
+        condition: service_completed_successfully
     volumes:
-      - .:/var/www
+      - .:/var/www/app
+    working_dir: /var/www/app
+    networks:
+      - app_network
     ports:
       - "5173:5173"
-    command: npm run dev
-    networks:
-      - app-network
+    command: ["npm", "run", "dev"]
 
 networks:
-  app-network:
+  app_network:
     driver: bridge

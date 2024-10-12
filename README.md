@@ -37,6 +37,12 @@ remainder of the tasks if you had time in the PR description.
 
 ## Getting Started
 
+### [Optional] Running with Docker
+
+```
+docker compose up -d --build
+```
+
 ### Prerequisites
 
 - PHP ^8.2
