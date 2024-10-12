@@ -6,7 +6,6 @@ use App\Models\Chain;
 use App\Models\Prompt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
 class PromptController extends Controller
 {
@@ -15,13 +14,6 @@ class PromptController extends Controller
      */
     public function index(Request $request)
     {
-    }
-
-    public function create(Chain $chain)
-    {
-        return inertia('Prompt/Create', [
-            'chain' => $chain,
-        ]);
     }
 
 

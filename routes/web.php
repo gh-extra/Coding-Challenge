@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('chains', ChainController::class);
     Route::resource('chains.prompts', PromptController::class)
-         ->only(['create', 'store', 'edit', 'update', 'destroy']);
+         ->only(['store', 'edit', 'update', 'destroy']);
 });
 
 require __DIR__ . '/auth.php';

@@ -1,7 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import Prompt from '@/Components/Prompt.vue';
+import CreatePrompt from '@/Components/CreatePrompt.vue';
+import { ref } from 'vue';
 
 defineProps({
     chain: {
@@ -9,10 +11,14 @@ defineProps({
     },
 });
 
-const redirectToCreate = (chainId) => {
-    router.visit(route('chains.prompts.create', chainId));
+const isCreating = ref(false);
+const toggleCreatePrompt = () => {
+    isCreating.value = !isCreating.value;
 };
 
+const handlePromptCreated = () => {
+    isCreating.value = false;
+};
 </script>
 
 <template>
@@ -41,10 +47,19 @@ const redirectToCreate = (chainId) => {
 
                     <!-- Centered "+" button at the bottom -->
                     <div class="flex justify-center mt-6">
-                        <button @click.prevent="redirectToCreate(chain.id)"
+                        <button v-if="!isCreating" @click.prevent="toggleCreatePrompt"
                                 class="inline-flex items-center justify-center w-12 h-12 border border-transparent rounded-full shadow-sm text-2xl font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-500">
                             +
                         </button>
+                    </div>
+
+                    <div v-if="isCreating" class="mt-4">
+                        <button
+                            @click.prevent="toggleCreatePrompt"
+                            class="mb-4 inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-300 text-red-600 hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-500">
+                            X
+                        </button>
+                        <CreatePrompt :chainId="chain.id" @created="handlePromptCreated" />
                     </div>
                 </div>
             </div>
