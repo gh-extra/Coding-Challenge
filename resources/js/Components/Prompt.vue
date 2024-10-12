@@ -33,16 +33,18 @@ const submit = () => {
 };
 
 const runPrompt = () => {
-    if (form.input) {
-        form.post(route('chains.prompts.run', { chain: props.prompt.chain_id, prompt: props.prompt.id }), {
-            // onSuccess: (page) => {
-
-            // },
-            onError: () => {
-                alert('Error running the prompt');
-            }
-        });
+    if (!form.input) {
+        return;
     }
+
+    form.post(route('chains.prompts.run', { chain: props.prompt.chain_id, prompt: props.prompt.id }), {
+        // onSuccess: (page) => {
+
+        // },
+        onError: () => {
+            alert('Error running the prompt');
+        }
+    });
 };
 
 </script>

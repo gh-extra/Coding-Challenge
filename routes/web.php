@@ -26,10 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('chains', ChainController::class);
+    Route::post('/chains/{chain}/run', [ChainController::class, 'run'])->name('chains.run');
+
     Route::resource('chains.prompts', PromptController::class)
          ->only(['store', 'update', 'destroy']);
-
-    Route::post('/chains/{chain}/prompts/{prompt}', [PromptController::class, 'run'])->name('chains.prompts.run');
+    Route::post('/chains/{chain}/prompts/{prompt}/run', [PromptController::class, 'run'])->name('chains.prompts.run');
 });
 
 require __DIR__ . '/auth.php';

@@ -79,4 +79,20 @@ class ChainController extends Controller
 
         return Redirect::route('chains.index');
     }
+
+    public function run(Request $request, Chain $chain)
+    {
+        // TODO: validate this chain belongs to the user
+
+        DB::transaction(function () use ($chain) {
+            $chain->prompts->each(function ($prompt) {
+                $prompt->update([
+                    'output' => $prompt->input . ' output',
+                    'last_run_at' => now()
+                ]);
+            });
+        });
+
+        return Inertia::location(route('chains.show', $chain->id));
+    }
 }

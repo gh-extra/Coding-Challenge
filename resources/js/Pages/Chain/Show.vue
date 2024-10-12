@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import Prompt from '@/Components/Prompt.vue';
 import CreatePrompt from '@/Components/CreatePrompt.vue';
 import { ref } from 'vue';
@@ -19,6 +19,21 @@ const toggleCreatePrompt = () => {
 const handlePromptCreated = () => {
     isCreating.value = false;
 };
+
+const runChain = (chain) => {
+    if (!chain.prompts.length) {
+        return;
+    }
+
+    useForm({}).post(route('chains.run', { chain: chain.id }), {
+        // onSuccess: (page) => {
+
+        // },
+        onError: () => {
+            alert('Error running the chain');
+        }
+    });
+};
 </script>
 
 <template>
@@ -35,10 +50,10 @@ const handlePromptCreated = () => {
                     <div class="flex justify-between items-center">
                         <div class="w-4/5 max-w-[80%] truncate">{{ chain.description }}</div>
                         <button
-                            @click.prevent="redirectToCreate(chain.id)"
+                            @click.prevent="runChain(chain)"
                             :disabled="!chain.prompts.length"
-                            :class="{'bg-gray-400 cursor-not-allowed': !chain.prompts.length, 'bg-blue-600 hover:bg-blue-700': chain.prompts.length}"
-                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring focus:ring-blue-500">
+                            :class="{'bg-gray-400 cursor-not-allowed': !chain.prompts.length, 'bg-green-600 hover:bg-green-700': chain.prompts.length}"
+                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring focus:ring-green-500">
                             Run Full Chain
                         </button>
                     </div>
