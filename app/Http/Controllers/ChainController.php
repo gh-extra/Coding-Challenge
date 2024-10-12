@@ -4,23 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Chain;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class ChainController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Inertia::render('Chain/List', [
+            'chains' => Chain::where('user_id', $request->user()->id)->get(),
+        ]);
     }
 
     /**
@@ -36,15 +32,12 @@ class ChainController extends Controller
      */
     public function show(Chain $chain)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Chain $chain)
-    {
-        //
+        // TODO: validate this chain belongs to the user
+        return Inertia::render('Chain/Show', [
+            'chain' => $chain->load([
+                'prompts' => fn ($query) => $query->orderBy('position'),
+            ])
+        ]);
     }
 
     /**
@@ -60,6 +53,9 @@ class ChainController extends Controller
      */
     public function destroy(Chain $chain)
     {
-        //
+        // TODO: validate this chain belongs to the user
+        $chain->delete();
+
+        return Redirect::route('chain.index');
     }
 }
