@@ -22,7 +22,7 @@ class ChainController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Chain/Index', [
-            'chains' => Chain::where('user_id', $request->user()->id)->get(),
+            'chains' => $request->user()->chains,
         ]);
     }
 
