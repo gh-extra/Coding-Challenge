@@ -14,6 +14,14 @@ return new class extends Migration
         Schema::create('prompts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->foreignId('chain_id')->index();
+            $table->text('input');
+            $table->text('output')->nullable();
+            $table->timestamp('last_run_at')->nullable();
+            $table->integer('position')->default(0);
+
+            $table->softDeletes();
         });
     }
 

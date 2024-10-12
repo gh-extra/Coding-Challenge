@@ -14,6 +14,14 @@ return new class extends Migration
         Schema::create('chains', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->string('name');
+            $table->string('description')->nullable();
+
+            $table->foreignId('user_id')->index();
+            $table->timestamp('last_run_at')->nullable();
+
+            $table->softDeletes();
         });
     }
 
