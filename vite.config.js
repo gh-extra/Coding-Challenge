@@ -29,4 +29,13 @@ export default defineConfig({
             'ziggy-router': path.resolve('vendor/tightenco/ziggy/src/js/Router.js'),
         },
     },
+    server: {
+        host: true, // Allow access from all addresses
+        port: 5173,
+        cors: {
+            origin: 'http://localhost:8000', // Allow requests from your Laravel app
+            methods: ['GET', 'POST', 'OPTIONS'], // Allowed methods
+            allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+        },
+    },
 });
